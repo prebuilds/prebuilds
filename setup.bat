@@ -101,6 +101,10 @@ if "%INSTALLBUILDTOOLS%"=="1" (
   cd ..
   rmdir /q /s vs_BuildTools
   del vs_BuildTools.exe
+
+  :: Before using, please run the following command:
+  :: "C:\Program Files\Microsoft Visual Studio\2022\BuildTools\Common7\Tools\VsDevCmd.bat"
+  :: This will add to your current command prompt session the necessary build tools
 )
 
 endlocal

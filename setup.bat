@@ -5,17 +5,17 @@ setlocal enabledelayedexpansion
 for /f "tokens=2 delims==" %%A in ('wmic OS get OSArchitecture /value ^| find "="') do set "ARCH=%%A"
 
 if "%ARCH%"=="32-bit" (
-    set "WGETDL=https://eternallybored.org/misc/wget/1.21.4/32/wget.exe"
-    set "7ZDL=https://www.7-zip.org/a/7z2409.exe"
-    set "GITDL=https://github.com/git-for-windows/git/releases/download/v2.48.1.windows.1/Git-2.48.1-32-bit.exe"
+  set "WGETDL=https://eternallybored.org/misc/wget/1.21.4/32/wget.exe"
+  set "7ZDL=https://www.7-zip.org/a/7z2409.exe"
+  set "GITDL=https://github.com/git-for-windows/git/releases/download/v2.48.1.windows.1/Git-2.48.1-32-bit.exe"
 ) else if "%ARCH%"=="64-bit" (
-    set "WGETDL=https://eternallybored.org/misc/wget/1.21.4/64/wget.exe"
-    set "7ZDL=https://www.7-zip.org/a/7z2409-x64.exe"
-    set "GITDL=https://github.com/git-for-windows/git/releases/download/v2.48.1.windows.1/Git-2.48.1-64-bit.exe"
+  set "WGETDL=https://eternallybored.org/misc/wget/1.21.4/64/wget.exe"
+  set "7ZDL=https://www.7-zip.org/a/7z2409-x64.exe"
+  set "GITDL=https://github.com/git-for-windows/git/releases/download/v2.48.1.windows.1/Git-2.48.1-64-bit.exe"
 ) else (
-    set "WGETDL=https://eternallybored.org/misc/wget/1.21.4/a64/wget.exe"
-    set "7ZDL=https://www.7-zip.org/a/7z2409-arm64.exe"
-    set "GITDL=https://github.com/git-for-windows/git/releases/download/v2.48.1.windows.1/Git-2.48.1-arm64.exe"
+  set "WGETDL=https://eternallybored.org/misc/wget/1.21.4/a64/wget.exe"
+  set "7ZDL=https://www.7-zip.org/a/7z2409-arm64.exe"
+  set "GITDL=https://github.com/git-for-windows/git/releases/download/v2.48.1.windows.1/Git-2.48.1-arm64.exe"
 )
 
 :: Download Wget as it's needed to install other softwares
@@ -26,22 +26,22 @@ if %errorlevel% gtr 0 @exit /b 1
 :: Install needed software
 set "INSTALLBUILDTOOLS=0"
 for %%P in (%*) do (
-    if "%%P"=="wget" (
-      :: Already installed before
-      echo.
-    ) else if "%%P"=="7z" (
-      C:\Windows\wget.exe "%7ZDL%" -O 7zinstall.exe
-      7zinstall.exe /S
-      del 7zinstall.exe
-      mklink /H "C:\Windows\7z.exe" "C:\Program Files\7-Zip\7z.exe"
-    ) else if "%%P"=="git" (
-      wget "%GITDL%" -O gitinstall.exe
-      gitinstall.exe /VERYSILENT /NORESTART
-      del gitinstall.exe
-      mklink /H "C:\Windows\git.exe" "C:\Program Files\Git\bin\git.exe"
-    )
-
-    echo gcc g++ libc6 libstdc++6 binutils make | findstr /b /c:"%%P" >nul && set "INSTALLBUILDTOOLS=1"
+  if "%%P"=="wget" (
+    :: Already installed before
+    echo.
+  ) else if "%%P"=="7z" (
+    C:\Windows\wget.exe "%7ZDL%" -O 7zinstall.exe
+    7zinstall.exe /S
+    del 7zinstall.exe
+    mklink /H "C:\Windows\7z.exe" "C:\Program Files\7-Zip\7z.exe"
+  ) else if "%%P"=="git" (
+    wget "%GITDL%" -O gitinstall.exe
+    gitinstall.exe /VERYSILENT /NORESTART
+    del gitinstall.exe
+    mklink /H "C:\Windows\git.exe" "C:\Program Files\Git\bin\git.exe"
+  )
+  
+  echo gcc g++ libc6 libstdc++6 binutils make | findstr /b /c:"%%P" >nul && set "INSTALLBUILDTOOLS=1"
 )
 
 if "%INSTALLBUILDTOOLS%"=="1" (

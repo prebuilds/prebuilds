@@ -49,7 +49,6 @@ if "%INSTALLBUILDTOOLS%"=="1" (
   :: Download and run the VS Installer for Build Tools
   wget https://aka.ms/vs/17/release/vs_BuildTools.exe -O vs_BuildTools.exe
   vs_BuildTools.exe --layout .\vs_BuildTools
-  del vs_BuildTools.exe
   cd vs_BuildTools
   vs_setup.exe --nocache --wait --noUpdateInstaller --noWeb --allWorkloads --includeRecommended --includeOptional --quiet --norestart
 
@@ -88,8 +87,11 @@ if "%INSTALLBUILDTOOLS%"=="1" (
 
   :: Install the necessary build tools
   vs_setup.exe --quiet --nocache --wait --in CustomInstall.json
-  vs_setup.exe --nocache --wait --noUpdateInstaller --noWeb --add "Microsoft.VisualStudio.Workload.MSBuildTools;includeRecommended;includeOptional" --quiet --norestart
-  vs_setup.exe --nocache --wait --noUpdateInstaller --noWeb --add "Microsoft.VisualStudio.Workload.VCTools;includeRecommended;includeOptional" --quiet --norestart
+
+  :: Cleanup
+  cd ..
+  rmdir /q /s vs_BuildTools
+  del vs_BuildTools.exe
 )
 
 endlocal

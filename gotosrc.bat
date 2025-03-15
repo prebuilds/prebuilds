@@ -9,8 +9,8 @@ for /f "delims=" %%D in ('dir /b /a-d') do set "COUNT=%%D"
 for /f %%C in ('dir /b /a-d ^| find /c /v ""') do set "FILECOUNT=%%C"
 
 if "%FILECOUNT%"=="1" (
-    cd /d "%COUNT%" || exit /b 1
-    goto LOOP
+  cd /d "%COUNT%" || exit /b 1
+  goto LOOP
 )
 
 endlocal

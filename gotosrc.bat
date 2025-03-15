@@ -1,3 +1,7 @@
+:: DO NOT use this tool
+:: it is here as a reference, a note, not to be ran
+exit /b 0
+
 @echo off
 setlocal enabledelayedexpansion
 

@@ -3,9 +3,6 @@
 # Update sources
 sudo apt update
 
-# Upgrade software
-sudo apt upgrade -y
-
 # Install needed software
 for pkgname in "$@"; do
   case "$pkgname" in

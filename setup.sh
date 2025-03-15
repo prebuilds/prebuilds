@@ -14,8 +14,8 @@ for pkgname in "$@"; do
     "wget") sudo apt install wget -y ;;
     "gcc") sudo apt install gcc -y ;;
     "g++") sudo apt install g++ -y ;;
-    "libc6") sudo apt install libc6 -y ;;
-    "libstdc++6") sudo apt install libstdc++6 -y ;;
+    "libc") sudo apt install libc6 -y ;;
+    "libstdc++") sudo apt install libstdc++6 -y ;;
     "binutils") sudo apt install binutils -y ;;
     "make") sudo apt install make -y ;;
   esac

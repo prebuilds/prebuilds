@@ -26,12 +26,12 @@ if "!LOWERSOURCE!"=="!LOWERSOURCE:.git=!" if "!SOURCECODE:*.=!"=="!SOURCECODE!" 
     wget "%SOURCECODE%" -O "src.tar.!SOURCECODE:*.=!" || exit /b 1
     7z x -y "src.tar.!SOURCECODE:*.=!"
     del "src.tar.!SOURCECODE:*.=!"
-    7z x -y src.tar -o./src
+    7z x -y src.tar -o.\src
     del src.tar
 ) else (
     :: Link to regular ZIP or TAR file, download it with Wget and extract it with 7-Zip
     wget "%SOURCECODE%" -O "src.!SOURCECODE:*.=!" || exit /b 1
-    7z x -y "src.!SOURCECODE:*.=!" -o./src
+    7z x -y "src.!SOURCECODE:*.=!" -o.\src
     del "src.!SOURCECODE:*.=!"
 )
 

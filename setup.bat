@@ -1,5 +1,6 @@
 @echo off
 setlocal enabledelayedexpansion
+setlocal enableextensions
 
 :: Detect the right download links depending on the architecture
 for /f "tokens=2 delims==" %%A in ('wmic OS get OSArchitecture /value ^| find "="') do set "ARCH=%%A"
@@ -30,18 +31,26 @@ for %%P in (%*) do (
     :: Already installed before
     echo.
   ) else if "%%P"=="7z" (
-    C:\Windows\wget.exe "%7ZDL%" -O 7zinstall.exe
-    7zinstall.exe /S
-    del 7zinstall.exe
-    mklink /H "C:\Windows\7z.exe" "C:\Program Files\7-Zip\7z.exe"
+    set 7ZEXISTS=0
+    for %%x in (7z.exe) do if not [%%~$PATH:x]==[] set 7ZEXISTS=1
+    if "%7ZEXISTS%" neq "1" (
+      C:\Windows\wget.exe "%7ZDL%" -O 7zinstall.exe
+      7zinstall.exe /S
+      del 7zinstall.exe
+      mklink /H "C:\Windows\7z.exe" "C:\Program Files\7-Zip\7z.exe"
+    )
   ) else if "%%P"=="git" (
-    wget "%GITDL%" -O gitinstall.exe
-    gitinstall.exe /VERYSILENT /NORESTART
-    del gitinstall.exe
-    mklink /H "C:\Windows\git.exe" "C:\Program Files\Git\bin\git.exe"
+    set GITEXISTS=0
+    for %%x in (git.exe) do if not [%%~$PATH:x]==[] set GITEXISTS=1
+    if "%GITEXISTS%" neq "1" (
+      wget "%GITDL%" -O gitinstall.exe
+      gitinstall.exe /VERYSILENT /NORESTART
+      del gitinstall.exe
+      mklink /H "C:\Windows\git.exe" "C:\Program Files\Git\bin\git.exe"
+    )
   )
   
-  echo gcc g++ libc6 libstdc++6 binutils make | findstr /b /c:"%%P" >nul && set "INSTALLBUILDTOOLS=1"
+  echo gcc g++ libc6 libstdc++6 binutils make clang llvm | findstr /b /c:"%%P" >nul && set "INSTALLBUILDTOOLS=1"
 )
 
 if "%INSTALLBUILDTOOLS%"=="1" (
